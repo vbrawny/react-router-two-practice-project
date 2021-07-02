@@ -1,10 +1,31 @@
-import "./styles.css";
-
-export default function App() {
+import React from "react";
+import {
+  Route,
+  Switch,
+  exact,
+  Redirect,
+  BrowserRouter
+} from "react-router-dom";
+import AllQuotes from "./pages/AllQuotes";
+import NewQuote from "./pages/NewQuote";
+import QuoteDetail from "./pages/QuoteDetail";
+function App() {
   return (
-    <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Edit to see some magic happen!</h2>
-    </div>
+    <Switch>
+      <Route path="/" exact>
+        <Redirect to="/quotes" />
+      </Route>
+      <Route path="/quotes" exact>
+        <AllQuotes />
+      </Route>
+      <Route path="/quotes/:quoteId">
+        <QuoteDetail />
+      </Route>
+      <Route path="/new-quote">
+        <NewQuote />
+      </Route>
+    </Switch>
   );
 }
+
+export default App;
