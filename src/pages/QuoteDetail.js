@@ -27,7 +27,7 @@ const QuoteDetail = () => {
   // this will help useEffect to write only when  quoteId changes in params
   //rather than useEffect activating for all params.
   const { quoteId } = Params;
-  const quote = DUMMY_QUOTES.find((quote) => quote.id === Params.quoteId);
+  //const quote = DUMMY_QUOTES.find((quote) => quote.id === Params.quoteId);
   //IMP - SIMILAR kind of implementation inside project.
   const { sendRequest, status, loadedQuote, error } = useHttp(
     getSingleQuote,
