@@ -36,7 +36,7 @@ const QuoteForm = (props) => {
       return false;
     });
   };
-
+  console.log("--isLoading--", props.isLoading);
   return (
     <Fragment>
       <Prompt
