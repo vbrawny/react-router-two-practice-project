@@ -6,20 +6,20 @@ import useHttp from "../hooks/use-http";
 import { getSingleQuote } from "../lib/api";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
 import HighlightedQuote from "../components/quotes/HighlightedQuote";
-import NoQuotesFound from "../components/quotes/NoQuotesFound";
+//import NoQuotesFound from "../components/quotes/NoQuotesFound";
 import Comments from "../components/comments/Comments";
-const DUMMY_QUOTES = [
-  {
-    id: "q1",
-    author: "max",
-    text: "learning react is fun!"
-  },
-  {
-    id: "q2",
-    author: "millian",
-    text: "learning react is great"
-  }
-];
+// const DUMMY_QUOTES = [
+//   {
+//     id: "q1",
+//     author: "max",
+//     text: "learning react is fun!"
+//   },
+//   {
+//     id: "q2",
+//     author: "millian",
+//     text: "learning react is great"
+//   }
+// ];
 
 const QuoteDetail = () => {
   const match = useRouteMatch();
@@ -29,7 +29,7 @@ const QuoteDetail = () => {
   const { quoteId } = Params;
   //const quote = DUMMY_QUOTES.find((quote) => quote.id === Params.quoteId);
   //IMP - SIMILAR kind of implementation inside project.
-  const { sendRequest, status, loadedQuote, error } = useHttp(
+  const { sendRequest, status, data: loadedQuote, error } = useHttp(
     getSingleQuote,
     true
   );
@@ -54,12 +54,13 @@ const QuoteDetail = () => {
   //   return <NoQuotesFound />;
   // }
 
-  if (!loadedQuote.text) {
+  if (status === "completed" && loadedQuote && !loadedQuote.text) {
     //IMP -  we can use this for the "empty value inside our Project"
     return <p>No Quote Found </p>;
   }
 
   // console.log(quote);
+  console.log("--loadedQuote--", loadedQuote);
   // if (!quote) {
   //   return <div>Not Found</div>;
   // }
@@ -73,7 +74,10 @@ const QuoteDetail = () => {
 
   return (
     <section>
-      <HighlightedQuote text={loadedQuote.text} author={loadedQuote.author} />
+      <HighlightedQuote
+        text={loadedQuote && loadedQuote.text}
+        author={loadedQuote && loadedQuote.author}
+      />
       <Route path={`${match.path}`} exact>
         <div className="centered">
           {/* wherever it is required we will call it, but 
