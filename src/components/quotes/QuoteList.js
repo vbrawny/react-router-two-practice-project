@@ -24,7 +24,14 @@ const QuoteList = (props) => {
   const changeSortingHandler = () => {
     //history.push("/quotes?sort="+<state>);
     //IMP - this will make to re-render the component
-    history.push("/quotes?sort=" + (isSortAscending ? "desc" : "asc"));
+    //history.push("/quotes?sort=" + (isSortAscending ? "desc" : "asc"));
+    // history.push(
+    //   `${location.pathname}?sort=${isSortAscending ? "desc" : "asc"}`
+    // );
+    history.push({
+      pathname: `${location.pathname}`,
+      search: `?sort=${isSortAscending ? "desc" : "asc"}`
+    });
   };
   console.log(location);
 
