@@ -1,13 +1,52 @@
-import { Fragment } from 'react';
+import { Fragment } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import QuoteItem from "./QuoteItem";
+import classes from "./QuoteList.module.css";
 
-import QuoteItem from './QuoteItem';
-import classes from './QuoteList.module.css';
+const sortQuotes = (quotes, ascending) => {
+  return quotes.sort((quoteA, quoteB) => {
+    if (ascending) {
+      return quoteA.id > quoteB.id ? 1 : -1;
+    } else {
+      return quoteA.id < quoteB.id ? 1 : -1;
+    }
+  });
+};
 
 const QuoteList = (props) => {
+  const history = useHistory();
+  const location = useLocation();
+
+  //IMP -  using this we can get queryParams object
+  const queryParams = new URLSearchParams(location.search);
+  ///quotes?sort=asc
+  const isSortAscending = queryParams.get("sort") === "asc";
+  const changeSortingHandler = () => {
+    //history.push("/quotes?sort="+<state>);
+    //IMP - this will make to re-render the component
+    history.push("/quotes?sort=" + (isSortAscending ? "desc" : "asc"));
+  };
+  console.log(location);
+
+  const sortedQuotes = sortQuotes(props.quotes, isSortAscending);
+
   return (
     <Fragment>
+      <div className={classes.sorting}>
+        <button onClick={changeSortingHandler}>
+          Sort {isSortAscending ? "Descending" : "Ascending"}
+        </button>
+      </div>
       <ul className={classes.list}>
-        {props.quotes.map((quote) => (
+        {/* {props.quotes.map((quote) => (
+          <QuoteItem
+            key={quote.id}
+            id={quote.id}
+            author={quote.author}
+            text={quote.text}
+          />
+        ))} */}
+        {sortedQuotes.map((quote) => (
           <QuoteItem
             key={quote.id}
             id={quote.id}
