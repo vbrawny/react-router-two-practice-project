@@ -25,6 +25,7 @@ export async function getAllQuotes() {
 
 export async function getSingleQuote(quoteId) {
   const response = await fetch(`${FIREBASE_DOMAIN}/quotes/${quoteId}.json`);
+  console.log("--getSingleQuote-response--", response);
   const data = await response.json();
 
   if (!response.ok) {
