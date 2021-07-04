@@ -15,6 +15,7 @@ const NewCommentForm = (props) => {
 
   useEffect(() => {
     if (status == "completed" && !error) {
+      //infinite loop avoiding
       onAddedComment();
     }
   }, [status, error, onAddedComment]);
